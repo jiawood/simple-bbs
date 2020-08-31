@@ -5,3 +5,13 @@ export function getPosts() {
     url: '/posts'
   })
 }
+
+//获取数据评论
+export function getPostComment(id) {
+  return request({
+    url: '/post',
+    params: {
+      id: id
+    }
+  })
+}

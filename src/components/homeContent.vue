@@ -31,6 +31,7 @@ export default {
 
 <style lang="scss" scoped>
 .home-content {
+  padding-top: 30px;
   min-width: 490px;
   max-width: 800px;
   position: relative;

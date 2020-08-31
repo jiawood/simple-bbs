@@ -35,6 +35,7 @@ export default {
   height: 45px;
   padding: 0 50px;
   background-color: white;
+  overflow: hidden;
   .left-log {
     float: left;
     height: 45px;

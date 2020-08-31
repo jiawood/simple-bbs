@@ -1,12 +1,26 @@
 <template>
   <div id="app">
-    <router-view />
+    <home-header />
+    <div class="content">
+      <router-view />
+    </div>
   </div>
 </template>
 
+<script>
+import HomeHeader from 'components/HomeHeader'
+export default {
+  name: 'App',
+  components: {
+    HomeHeader
+  }
+}
+</script>
+
 <style lang="scss">
-#app {
-  margin: 0;
-  padding: 0;
+.content {
+  width: 100%;
+  height: 100%;
+  background-color: rgb(223, 223, 223);
 }
 </style>

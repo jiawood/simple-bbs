@@ -9,7 +9,7 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home
-  }
+  },
   // {
   //   path: "/about",
   //   name: "About",
@@ -19,6 +19,12 @@ const routes = [
   //   component: () =>
   //     import(/* webpackChunkName: "about" */ "../views/About.vue")
   // }
+  {
+    //设置回复页面
+    path: '/post/:id',
+    name: 'PostComments',
+    component: () => import('views/PostComments.vue')
+  }
 ]
 
 const router = new VueRouter({

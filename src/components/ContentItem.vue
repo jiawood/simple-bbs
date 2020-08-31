@@ -54,6 +54,7 @@ export default {
   .content {
     height: 50px;
     margin-left: 10px;
+    background-color: white;
     flex: 1;
     .title {
       line-height: 30px;
@@ -69,7 +70,7 @@ export default {
         background-color: #f5f5f5;
       }
       .user {
-        color: #778087;
+        color: rgb(119,128,135);
       }
     }
   }
