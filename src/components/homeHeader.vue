@@ -20,7 +20,7 @@
 
 <script>
 export default {
-  name: 'homeHeader',
+  name: 'HomeHeader',
   data() {
     return {
       isLogin: true,
@@ -34,6 +34,7 @@ export default {
 .header {
   height: 45px;
   padding: 0 50px;
+  background-color: white;
   .left-log {
     float: left;
     height: 45px;
@@ -42,7 +43,8 @@ export default {
       line-height: 45px;
       font-size: 30px;
       font-weight: 800;
-      color: rgb(77,82,86);
+      color: rgb(77, 82, 86);
+      cursor: pointer;
     }
   }
   .right-login {
@@ -55,12 +57,11 @@ export default {
       div {
         line-height: 25px;
         margin-right: 20px;
-        color: rbg(85,85,102);
+        color: rbg(85, 85, 102);
         float: right;
         cursor: pointer;
         font-size: 15px;
       }
-
     }
   }
 }

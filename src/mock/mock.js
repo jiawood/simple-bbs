@@ -1,0 +1,22 @@
+// 引入mockjs
+const Mock = require('mockjs')
+// 获取 mock.Random 对象
+const Random = Mock.Random
+// mock新闻数据，包括新闻标题title、内容content、创建时间createdTime
+const produceNewsData = function() {
+  let posts = []
+  for (let i = 0; i < 20; i++) {
+    let newPost = {
+      avator: Random.image(), //  Random.ctitle( min, max ) 随机产生一个中文标题，长度默认在3-7之间
+      title: Random.title(), // Random.cparagraph(min, max) 随机生成一个中文段落，段落里的句子个数默认3-7个
+      createdAt: Random.time(), // Random.date()指示生成的日期字符串的格式,默认为yyyy-MM-dd；
+      counts: Random.integer(0,100),
+      user: Random.name()
+    }
+    posts.push(newPost)
+  }
+
+  return posts
+}
+// 请求该url，就可以返回newsList
+Mock.mock('/mock/posts', produceNewsData)

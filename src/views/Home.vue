@@ -1,16 +1,25 @@
 <template>
   <div class="home">
     <home-header></home-header>
+    <home-content></home-content>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import homeHeader from 'components/homeHeader'
+import HomeHeader from 'components/HomeHeader'
+import HomeContent from 'components/HomeContent'
 export default {
   name: 'Home',
   components: {
-    homeHeader
+    HomeHeader,
+    HomeContent
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.home {
+  background-color: rgb(223,223,223);
+}
+</style>
