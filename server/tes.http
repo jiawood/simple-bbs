@@ -4,11 +4,21 @@
 get {{url}}
 
 ### 注册
-post{{url}}/register
+post {{url}}/register
 {{json}}
+
 {
-  'user': "xiaoj",
-  'password': '123'
+  "name": "xj1",
+  "password": "123",
+  "resigerTime": "Mon Sep 07 2020 11:46:31 GMT+0800",
+  "avator": "4.jpg",
+  "email": "xiaojia@qq.com"
 }
 ### 登录
-post{{url}}/login
+post {{url}}/login
+{{json}}
+
+{
+  "name":"xj",
+  "password":"123"
+}
