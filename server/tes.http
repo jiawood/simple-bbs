@@ -1,0 +1,14 @@
+@url=http://localhost:3001
+@json=Content-Type: application/json
+###
+get {{url}}
+
+### 注册
+post{{url}}/register
+{{json}}
+{
+  'user': "xiaoj",
+  'password': '123'
+}
+### 登录
+post{{url}}/login

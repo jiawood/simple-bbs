@@ -7,13 +7,13 @@
       <div class="title">{{ post.title }}</div>
       <div class="detail">
         <span class="share">分享发现</span> •
-        <span class="user">{{ post.user }}</span>
+        <span class="user">{{ post.name }}</span>
         •
         <span class="time">{{ post.createdAt }}</span>
       </div>
     </div>
       <div class="counts">
-        <div class="count">{{ post.counts }}</div>
+        <div class="count">{{ counts }}</div>
         </div>
   </div>
 </template>
@@ -21,6 +21,11 @@
 <script>
 export default {
   name: 'ContentItem',
+  data() {
+    return {
+      counts: 10
+    }
+  },
   props: {
     post: {
       type: Object,

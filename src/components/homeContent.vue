@@ -21,8 +21,8 @@ export default {
   },
   created() {
     getPosts().then(res => {
-      // console.log(res)
-      this.posts = res.data
+      console.log(res)
+      this.posts = res.posts
     })
   }
 
