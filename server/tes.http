@@ -22,3 +22,28 @@ post {{url}}/login
   "name":"xj",
   "password":"123"
 }
+
+### 获取帖子
+get {{url}}/posts/3
+{{json}}
+
+### 增加帖子
+post {{url}}/posts/3
+{{json}}
+
+{
+  "userId":2,
+  "title":"你好，明天",
+  "content": "今天是个好日子\n今天是个好日子\n今天是个好日子\n今天是个好日子\n今天是个好日子\n今天是个好日子\n"
+}
+
+### 获得回复
+get {{url}}/comments/1
+
+### 增加回复
+post {{url}}/comments/1
+{{json}}
+
+{
+  "content": "hi,33"
+}

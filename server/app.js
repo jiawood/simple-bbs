@@ -47,10 +47,11 @@ app.route('/register').post(async (req, res) => {
   let user = req.body
   let check = await db.get(sqlMap.user.check, user.name)
   if (!check) {
+    let time = new Date().toString()
     await db.run(sqlMap.user.add, [
       user.name,
       user.password,
-      user.registerTime,
+      time,
       user.avator,
       user.email
     ])
@@ -89,12 +90,59 @@ app.route('/login').post(async (req, res) => {
     activeUser = logined
     console.log(activeUser)
     res.json({token: token})
-
   }
 })
 
-//显示所有的帖子
+//显示所有的帖子,并在登录的状态下发帖
+app
+  .route('/posts/:categoryId')
+  .get(async (req, res) => {
+    let id = req.params.categoryId
+    let posts = await db.all(sqlMap.posts.data, id)
+    res.json(posts)
+  })
+  .post(async (req, res) => {
+    if (activeUser) {
+      let posts = req.body
+      let id = req.params.categoryId
+      let time = new Date().toString()
+      await db.run(
+        sqlMap.posts.add,
+        posts.userId,
+        posts.title,
+        time,
+        posts.content,
+        id
+      )
+      res.json({
+        code: 200,
+        message: '发帖成功'
+      })
+    } else {
+      res.json({
+        code: -1,
+        message: '未登录，无法发帖'
+      })
+    }
+  })
 
+//显示帖子下面的回复，并在登录的状态下回帖
+//动态路由 回复/发帖的唯一标识符
+app
+  .route('/comments/:postId')
+  .get(async (req, res) => {
+    //通过postId来获得回复
+    let postId = req.params.postId
+    console.log(postId)
+    let comments = await db.all(sqlMap.comments.data, Number(postId))
+    res.json(comments)
+  })
+  .post(async (req, res) => {
+    let postId = req.params.postId
+    let time = new Date().toString()
+    console.log(req.body)
+    await db.run(sqlMap.comments.add, Number(postId), req.body.content, time, 1)
+  })
 
 //端口监听
 app.listen(port, () => {
