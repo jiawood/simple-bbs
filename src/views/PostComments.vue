@@ -4,7 +4,7 @@
       <div class="header">
         <div class="title">{{ title }}</div>
         <div class="message">
-          <span class="name">{{ user }}</span
+          <span class="name">{{ name }}</span
           >·
           <span class="time">{{ time }}</span>
         </div>
@@ -17,18 +17,18 @@
     </div>
     <div class="comments">
       <div class="top">
-        <span>{{count}}条回复 · </span>
-        <span>{{nowTime}}</span>
+        <span>{{ count }}条回复 · </span>
+        <span>{{ nowTime }}</span>
       </div>
       <div class="comment" v-for="(item, index) of comments" :key="index">
-        <comments-item :comment='item'></comments-item>
+        <comments-item :comment="item"></comments-item>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import {getPostComment} from 'api/index'
+import {getComments, getProfile, postDetail} from 'api/index'
 import CommentsItem from 'components/CommentsItem'
 export default {
   name: 'PostComments',
@@ -38,28 +38,44 @@ export default {
   data() {
     return {
       title: '',
-      user: '',
+      name: '',
+      userId: 0,
       content: '',
       avator: '',
       comments: [],
       time: '',
-      id: 22,
       nowTime: new Date(),
-      count:0,
+      count: 0
     }
   },
-  created() {
-    getPostComment(this.id).then(res => {
-      // console.log(res.data)
+  computed: {
+    postId() {
+      return this.$route.params.id
+    }
+  },
+  mounted() {
+    getComments(this.postId).then(res => {
       let data = res.data
+      this.count = data.length
+      this.comments = data
+    })
+    postDetail(this.postId).then(res => {
+      let data = res.data
+      this.userId = data.userId
       this.title = data.title
-      this.avator = data.avator
       this.content = data.content
       this.time = data.time
-      this.user = data.user
-      this.comments = data.comments
-      this.count = data.comments.length
     })
+  },
+  watch: {
+    userId(newV) {
+      getProfile(newV).then(res => {
+        let data = res.data
+        this.name = data.name
+        // console.log(process.env)
+        this.avator = process.env.VUE_APP_BASE_URL + data.avator
+      })
+    }
   }
 }
 </script>
@@ -121,13 +137,12 @@ export default {
     margin-bottom: 15px;
   }
 
-  .comments{
+  .comments {
     padding: 20px 10px 10px 10px;
     font-size: 14px;
     color: #dddddd;
     box-sizing: border-box;
     background-color: white;
-
   }
 }
 </style>

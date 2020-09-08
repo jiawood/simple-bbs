@@ -144,6 +144,23 @@ app
     await db.run(sqlMap.comments.add, Number(postId), req.body.content, time, 1)
   })
 
+//获取个人信息
+app.post('/profile', async (req, res) => {
+  // console.log(req.body)
+  let userId = req.body.userId
+  let profile = await db.get(sqlMap.user.data, userId)
+  // console.log(profile)
+  res.json(profile)
+})
+
+//根据postId获取帖子的详情
+app.get('/postDetail', async (req, res) => {
+  let postId = req.query.postId
+  // console.log(req)
+  let post = await db.get(sqlMap.posts.search, Number(postId))
+  res.json(post)
+})
+
 //端口监听
 app.listen(port, () => {
   console.log('server listening on port', port)

@@ -1,11 +1,11 @@
 <template>
   <div class="comments-item">
     <div class="avator">
-      <img :src="comment.avator" alt="" srcset="" />
+      <img :src="avator" alt="" srcset="" />
     </div>
     <div class="message">
-      <span class="name">{{ comment.user }}</span>
-      <span class="time">{{ comment.createdAt }}</span>
+      <span class="name">{{ name }}</span>
+      <span class="time">{{ comment.time }}</span>
     </div>
     <div class="comments">
       {{ comment.content }}
@@ -14,8 +14,15 @@
 </template>
 
 <script>
+import {getProfile} from 'api/index'
 export default {
   name: 'CommmentsItem',
+  data() {
+    return {
+      name: '',
+      avator: ''
+    }
+  },
   props: {
     comment: {
       type: Object,
@@ -23,6 +30,13 @@ export default {
         return {}
       }
     }
+  },
+  mounted(){
+    getProfile(this.comment.userId).then(res => {
+      let data = res.data
+      this.name = data.name
+      this.avator = process.env.VUE_APP_BASE_URL + data.avator
+    })
   }
 }
 </script>

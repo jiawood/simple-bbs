@@ -47,3 +47,17 @@ post {{url}}/comments/1
 {
   "content": "hi,33"
 }
+
+### 获得个人信息
+post {{url}}/profile
+{{json}}
+
+{
+  "userId":2
+}
+
+### 获取帖子的详细信息
+get {{url}}/postDetail?postId=2
+
+
+

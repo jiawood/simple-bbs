@@ -1,29 +1,32 @@
 <template>
-  <div class="content-item">
+  <div class="content-item" @click="clickItem(postId, userId)">
     <div class="avator">
-      <img :src="post.avator" alt="" srcset="" />
+      <img :src="avator" alt="" srcset="" />
     </div>
     <div class="content">
       <div class="title">{{ post.title }}</div>
       <div class="detail">
         <span class="share">分享发现</span> •
-        <span class="user">{{ post.name }}</span>
+        <span class="user">{{ name }}</span>
         •
-        <span class="time">{{ post.createdAt }}</span>
+        <span class="time">{{ post.time }}</span>
       </div>
     </div>
-      <div class="counts">
-        <div class="count">{{ counts }}</div>
-        </div>
+    <div class="counts">
+      <div class="count">{{ counts }}</div>
+    </div>
   </div>
 </template>
 
 <script>
+import {getComments, getProfile} from 'api/index'
 export default {
   name: 'ContentItem',
   data() {
     return {
-      counts: 10
+      counts: 0,
+      avator: '',
+      name: ''
     }
   },
   props: {
@@ -33,6 +36,34 @@ export default {
         return {}
       }
     }
+  },
+  computed: {
+    userId() {
+      return this.post.userId
+    },
+    postId() {
+      return this.post.postId
+    }
+  },
+  methods: {
+    clickItem(postId, userId) {
+      this.$router.push({
+        name: 'comments',
+        params: {id: postId, userId: userId}
+      })
+    }
+  },
+  mounted() {
+    getComments(this.postId).then(res => {
+      let data = res.data
+      this.counts = data.length
+    })
+    getProfile(this.userId).then(res => {
+      let data = res.data
+      this.name = data.name
+      // console.log(process.env)
+      this.avator = process.env.VUE_APP_BASE_URL + data.avator
+    })
   }
 }
 </script>
@@ -45,9 +76,10 @@ export default {
   flex-direction: row;
   flex-wrap: nowrap;
   background-color: white;
-  border: 1px solid rgb(188,188,188);
+  border: 1px solid rgb(188, 188, 188);
   box-sizing: border-box;
   margin-bottom: -1px;
+  cursor: pointer;
   .avator {
     height: 50px;
     width: 50px;
@@ -69,13 +101,13 @@ export default {
     .detail {
       line-height: 20px;
       font-size: 12px;
-        color: #999999;
+      color: #999999;
 
       .share {
         background-color: #f5f5f5;
       }
       .user {
-        color: rgb(119,128,135);
+        color: rgb(119, 128, 135);
       }
     }
   }

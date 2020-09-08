@@ -1,8 +1,51 @@
 import {request} from '@/utils/request'
 
+//获取分类为3的所有的帖子
 export function getPosts() {
   return request({
-    url: '/'
+    url: '/posts/3'
+  })
+}
+
+//增加帖子
+export function addPosts(userId,title,content) {
+  return request({
+    url: '/posts/3',
+    method: 'post',
+    data: {
+      userId,
+      title,
+      content
+    }
+  })
+}
+
+//获得回复
+export function getComments(postId) {
+  return request({
+    url: `/comments/${postId}`
+  })
+}
+
+//增加回复
+export function addComment(postId,content) {
+  return request({
+    url: `/comments/${postId}`,
+    method: 'post',
+    data: {
+      content
+    }
+  })
+}
+
+//获取个人信息
+export function getProfile(userId) {
+  return request({
+    url: '/profile',
+    method: 'post',
+    data: {
+      userId: userId
+    }
   })
 }
 
@@ -10,8 +53,47 @@ export function getPosts() {
 export function getPostComment(id) {
   return request({
     url: '/post',
-    params: {
+    method: 'post',
+    data: {
       id: id
+    }
+  })
+}
+
+//注册
+export function register(name, password, resigerTime, avator, email) {
+  return request({
+    url: '/register',
+    method: 'post',
+    data: {
+      name,
+      password,
+      resigerTime,
+      avator,
+      email
+    }
+  })
+}
+
+//登录
+export function login(name,password) {
+  return request({
+    url: '/login',
+    method: 'post',
+    data: {
+      name,
+      password
+    }
+  })
+}
+
+//获得帖子详情
+export function postDetail(postId) {
+  return request({
+    url: '/postDetail',
+    method: 'get',
+    params:{
+      postId
     }
   })
 }
