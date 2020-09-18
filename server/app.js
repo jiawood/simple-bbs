@@ -276,6 +276,15 @@ app.get('/postDetail', async (req, res) => {
   res.json(post)
 })
 
+//退出登录
+app.get('/signout', async (req, res) => {
+  res.clearCookie('userName')
+  res.json({
+    code: 0,
+    msg:'成功退出'
+  })
+})
+
 //端口监听
 app.listen(port, () => {
   console.log('server listening on port', port)

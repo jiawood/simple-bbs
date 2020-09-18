@@ -15,6 +15,7 @@ const store = new Vuex.Store({
     setLoginedUser(state, userMessage) {
       state.loginedUser = userMessage
     }
+
   }
 })
 

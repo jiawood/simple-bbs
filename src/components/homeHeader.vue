@@ -5,14 +5,14 @@
     </div>
     <div class="right-login">
       <div class="logined" v-if="logined">
-        <div class="sign-out">登出</div>
+        <div class="sign-out" @click="signOut">登出</div>
         <div class="user">{{ loginedUser.name }}</div>
-        <div class="home">首页</div>
+        <div class="home" @click="goToHome">首页</div>
       </div>
       <div class="no-logined" v-else>
         <div class="sign-out" @click="register">注册</div>
         <div class="user" @click="login">登录</div>
-        <div class="home">首页</div>
+        <div class="home" @click="goToHome">首页</div>
       </div>
     </div>
   </div>
@@ -20,12 +20,12 @@
 
 <script>
 import {mapState} from 'vuex'
-import {userIsLogined} from 'api/index'
+import {userIsLogined, signOut} from 'api/index'
 export default {
   name: 'HomeHeader',
 
   computed: {
-    ...mapState(['logined','loginedUser'])
+    ...mapState(['logined', 'loginedUser'])
   },
   methods: {
     register() {
@@ -34,17 +34,42 @@ export default {
       })
     },
     login() {
-        this.$router.push({
+      this.$router.push({
         path: 'login'
+      })
+    },
+    goToHome() {
+      this.$router.push({
+        path: 'home'
+      })
+    },
+    signOut() {
+      signOut().then(res => {
+        if (res.data.code === 0) {
+          this.$notify({
+            title: '退出成功！',
+            message: '您已成功退出,欢迎常来玩哦~',
+            type: 'success',
+            offset: 100
+          })
+          this.$store.commit('toggleLoginStatus', false)
+          this.$store.commit('setLoginedUser', undefined)
+        } else {
+          this.$notify.error({
+            title: '退出失败！',
+            message: '发生了未知错误，非常抱歉！',
+            offset: 100
+          })
+        }
       })
     }
   },
   mounted() {
     userIsLogined().then(res => {
       // console.log(res)
-      if(res.data.code == 0){
-        this.$store.commit('toggleLoginStatus',true)
-        this.$store.commit('setLoginedUser',res.data.user)
+      if (res.data.code == 0) {
+        this.$store.commit('toggleLoginStatus', true)
+        this.$store.commit('setLoginedUser', res.data.user)
       }
     })
   }

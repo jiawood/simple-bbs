@@ -99,3 +99,10 @@ export function userIsLogined(){
     method: 'get'
   })
 }
+
+//登出
+export function signOut(){
+  return request({
+    url: '/signout'
+  })
+}
