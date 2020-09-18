@@ -1,19 +1,21 @@
 const express = require('express')
-const fsp = require('fs').promises
-const path = require('path')
 const cors = require('cors')
 const multer = require('multer')
 const jwt = require('jsonwebtoken')
+const bcrypt = require('bcryptjs')
+
+const cookieParser = require('cookie-parser')
 
 const SECRET = 'dhgdkkdgdjk' //随机的一段字符串
 
 const sqlMap = require('./sqlMap')
 
+const DIR = __dirname + '/uploads/'
+
 const app = express()
 const port = 3001
 
 let db
-let activeUser
 const dbPromise = require('./db.js')
 
 dbPromise.then(value => {
@@ -23,13 +25,26 @@ dbPromise.then(value => {
 app.locals.pretty = true
 
 //跨域cors
-app.use(
-  cors({
-    maxAge: 86400,
-    origin: true,
-    credentials: true
-  })
-)
+// app.use(
+//   cors({
+//     maxAge: 86400,
+//     origin: true,
+//     credentials: true,
+//     allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
+
+//   })
+// )
+
+//使用cookieParser
+app.use(cookieParser(SECRET))
+
+//使用一个中间件，从签名的cookie中找出该用户的信心并挂在req对象上以供后续的中间件访问
+app.use(async (req, res, next) => {
+  if (req.signedCookies.userName) {
+    req.user = await db.get(sqlMap.user.data, req.signedCookies.userName)
+  }
+  next()
+})
 
 //使用json中间件，解析json
 app.use(express.json())
@@ -38,58 +53,133 @@ app.use(express.json())
 app.use('/uploads', express.static(__dirname + '/uploads'))
 
 app.get('/', (req, res) => {
-  res.end('ok')
+  if (req.user) {
+    res.json(res.user)
+  } else {
+    res.json({
+      code: -1,
+      msg: '用户未登录'
+    })
+  }
+})
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, DIR)
+  },
+  filename: (req, file, cb) => {
+    const fileName = file.originalname
+      .toLowerCase()
+      .split(' ')
+      .join('-')
+    cb(null, fileName)
+  }
+})
+
+var upload = multer({
+  storage: storage,
+  // limits: {
+  //   fileSize: 1024 * 1024 * 5
+  // },
+  fileFilter: (req, file, cb) => {
+    if (
+      file.mimetype == 'image/png' ||
+      file.mimetype == 'image/jpg' ||
+      file.mimetype == 'image/jpeg'
+    ) {
+      cb(null, true)
+    } else {
+      cb(null, false)
+      return cb(new Error('Only .png, .jpg and .jpeg format allowed!'))
+    }
+  }
 })
 
 //注册
-app.route('/register').post(async (req, res) => {
-  //注册的时候需要判断用户名是否重复
-  let user = req.body
-  let check = await db.get(sqlMap.user.check, user.name)
-  if (!check) {
-    let time = new Date().toString()
-    await db.run(sqlMap.user.add, [
-      user.name,
-      user.password,
-      time,
-      user.avator,
-      user.email
-    ])
-    res.send('用户注册成功')
+app.route('/register').post(upload.single('avator'), async (req, res) => {
+  try {
+    //注册的时候需要判断用户名是否重复
+    let user = req.body
+    // console.log(req.body)
+    let check = await db.get(sqlMap.user.check, user.name)
+    if (!check) {
+      let time = new Date().toString()
+      let avator = req.file.filename
+
+      let salt = bcrypt.genSaltSync(10)
+      let hash = bcrypt.hashSync(user.password, salt)
+
+      await db.run(sqlMap.user.add, [user.name, hash, time, avator, user.email])
+      // res.send('用户注册成功')
+      res.json({
+        code: 0,
+        msg: '用户注册成功'
+      })
+    } else {
+      res.json({
+        code: -1,
+        msg: '用户已被注册'
+      })
+    }
+    // console.log(req.body)
+    res.end('ok')
+  } catch (error) {
+    console.log(error)
   }
-  console.log(req.body)
-  res.end('ok')
 })
 
 //登录
 app.route('/login').post(async (req, res) => {
-  let user = req.body
-  // console.log(user)
-  let check = await db.get(sqlMap.user.check, user.name)
-  let logined = await db.all(sqlMap.user.login, [user.name, user.password])
-  if (!check) {
-    res.json({
-      code: -1,
-      message: '用户未注册'
-    })
-  } else if (!logined) {
-    res.json({
-      code: -1,
-      message: '密码错误'
-    })
-  } else {
-    // console.log(logined)
-    const token = jwt.sign(
-      {
-        id: String(logined.userId)
-      },
-      SECRET
+  try {
+    let user = req.body
+    // console.log(user)
+
+    let check = await db.get(sqlMap.user.check, user.name)
+    let getHashPassword = await db.get(
+      'select password from users where name = (?) ',
+      user.name
     )
-    //登录成功之后向客服端发送一个token，这个token可以存放在客户端的本地里面，之后在发送请求时带上这个token
-    //同时在server端将这个数据取出来，便于后续操作。
-    activeUser = logined
-    console.log(activeUser)
-    res.json({token: token})
+
+    let result = bcrypt.compareSync(
+      String(user.password),
+      getHashPassword.password
+    )
+    if (!check) {
+      res.json({
+        code: -2,
+        msg: '用户未注册'
+      })
+    } else if (!result) {
+      res.json({
+        code: -1,
+        msg: '密码错误'
+      })
+    } else {
+      // console.log(logined)
+      // const token = jwt.sign(
+      //   {
+      //     id: String(logined.userId)
+      //   },
+      //   SECRET
+      // )
+      // //登录成功之后向客服端发送一个token，这个token可以存放在客户端的本地里面，之后在发送请求时带上这个token
+      // res.json({token: token})
+
+      //登录成功之后，向浏览器发送一个cookie，同时发送登录成功
+      res.cookie('userName', user.name, {
+        maxAge: 86400000,
+        signed: true
+      })
+      let userdata = await db.get(sqlMap.user.data, user.name)
+      res.json({
+        code: 0,
+        msg: '登陆成功',
+        user: userdata
+        // return_url: req.get('referer'),
+      })
+    }
+  } catch (error) {
+    console.log(error)
   }
 })
 
@@ -102,27 +192,31 @@ app
     res.json(posts)
   })
   .post(async (req, res) => {
-    if (activeUser) {
-      let posts = req.body
-      let id = req.params.categoryId
-      let time = new Date().toString()
-      await db.run(
-        sqlMap.posts.add,
-        posts.userId,
-        posts.title,
-        time,
-        posts.content,
-        id
-      )
-      res.json({
-        code: 200,
-        message: '发帖成功'
-      })
-    } else {
-      res.json({
-        code: -1,
-        message: '未登录，无法发帖'
-      })
+    try {
+      if (req.user) {
+        let posts = req.body
+        let id = req.params.categoryId
+        let time = new Date().toString()
+        await db.run(
+          sqlMap.posts.add,
+          posts.userId,
+          posts.title,
+          time,
+          posts.content,
+          id
+        )
+        res.json({
+          code: 0,
+          message: '发帖成功'
+        })
+      } else {
+        res.json({
+          code: -1,
+          message: '未登录，无法发帖'
+        })
+      }
+    } catch (error) {
+      console.log(error)
     }
   })
 
@@ -133,22 +227,35 @@ app
   .get(async (req, res) => {
     //通过postId来获得回复
     let postId = req.params.postId
-    console.log(postId)
+    // console.log(postId)
     let comments = await db.all(sqlMap.comments.data, Number(postId))
     res.json(comments)
   })
   .post(async (req, res) => {
-    let postId = req.params.postId
-    let time = new Date().toString()
-    console.log(req.body)
-    await db.run(sqlMap.comments.add, Number(postId), req.body.content, time, 1)
+    if (req.user) {
+      let postId = req.params.postId
+      let time = new Date().toString()
+      // console.log(req.body)
+      await db.run(
+        sqlMap.comments.add,
+        Number(postId),
+        req.body.content,
+        time,
+        req.user.userId
+      )
+    } else {
+      res.json({
+        code: -1,
+        msg: '用户未登录'
+      })
+    }
   })
 
 //获取个人信息
 app.post('/profile', async (req, res) => {
   // console.log(req.body)
   let userId = req.body.userId
-  let profile = await db.get(sqlMap.user.data, userId)
+  let profile = await db.get('select name,registerTime,avator,email from users where userId = (?)', userId)
   // console.log(profile)
   res.json(profile)
 })
