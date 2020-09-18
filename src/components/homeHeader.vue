@@ -6,7 +6,7 @@
     <div class="right-login">
       <div class="logined" v-if="logined">
         <div class="sign-out">登出</div>
-        <div class="user">{{ logindUser.name }}</div>
+        <div class="user">{{ loginedUser.name }}</div>
         <div class="home">首页</div>
       </div>
       <div class="no-logined" v-else>
@@ -20,11 +20,12 @@
 
 <script>
 import {mapState} from 'vuex'
+import {userIsLogined} from 'api/index'
 export default {
   name: 'HomeHeader',
 
   computed: {
-    ...mapState(['logined','logindUser'])
+    ...mapState(['logined','loginedUser'])
   },
   methods: {
     register() {
@@ -37,6 +38,15 @@ export default {
         path: 'login'
       })
     }
+  },
+  mounted() {
+    userIsLogined().then(res => {
+      // console.log(res)
+      if(res.data.code == 0){
+        this.$store.commit('toggleLoginStatus',true)
+        this.$store.commit('setLoginedUser',res.data.user)
+      }
+    })
   }
 }
 </script>

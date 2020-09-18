@@ -38,7 +38,7 @@ app.locals.pretty = true
 //使用cookieParser
 app.use(cookieParser(SECRET))
 
-//使用一个中间件，从签名的cookie中找出该用户的信心并挂在req对象上以供后续的中间件访问
+//使用一个中间件，从签名的cookie中找出该用户的信息并挂在req对象上以供后续的中间件访问
 app.use(async (req, res, next) => {
   if (req.signedCookies.userName) {
     req.user = await db.get(sqlMap.user.data, req.signedCookies.userName)
@@ -52,9 +52,13 @@ app.use(express.json())
 //文件存储地址
 app.use('/uploads', express.static(__dirname + '/uploads'))
 
-app.get('/', (req, res) => {
+//判断是否登录过
+app.get('/isLogined', (req, res) => {
   if (req.user) {
-    res.json(res.user)
+    res.json({
+      code: 0,
+      user: req.user
+    })
   } else {
     res.json({
       code: -1,

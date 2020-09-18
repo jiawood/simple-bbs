@@ -92,4 +92,10 @@ export function postDetail(postId) {
   })
 }
 
-
+//页面刷新时，通过cookie判断用户是否登录，设置vuex里面的loginedUser
+export function userIsLogined(){
+  return request({
+    url: '/isLogined',
+    method: 'get'
+  })
+}
