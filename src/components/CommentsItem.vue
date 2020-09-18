@@ -5,7 +5,7 @@
     </div>
     <div class="message">
       <span class="name">{{ name }}</span>
-      <span class="time">{{ comment.time }}</span>
+      <span class="time">{{ time }}</span>
     </div>
     <div class="comments" >
       {{ comment.content }}
@@ -15,6 +15,7 @@
 
 <script>
 import {getProfile} from 'api/index'
+import parseTime from 'utils/parseTime'
 export default {
   name: 'CommmentsItem',
   data() {
@@ -29,6 +30,11 @@ export default {
       defaulf() {
         return {}
       }
+    }
+  },
+  computed: {
+    time(){
+      return parseTime(this.comment.time)
     }
   },
   mounted(){

@@ -9,7 +9,7 @@
         <span class="share">分享发现</span> •
         <span class="user">{{ name }}</span>
         •
-        <span class="time">{{ post.time }}</span>
+        <span class="time">{{ time }}</span>
       </div>
     </div>
     <div class="counts">
@@ -20,6 +20,7 @@
 
 <script>
 import {getComments, getProfile} from 'api/index'
+import parseTime from 'utils/parseTime.js'
 export default {
   name: 'ContentItem',
   data() {
@@ -29,6 +30,7 @@ export default {
       name: ''
     }
   },
+
   props: {
     post: {
       type: Object,
@@ -43,6 +45,9 @@ export default {
     },
     postId() {
       return this.post.postId
+    },
+    time() {
+      return parseTime(this.post.time)
     }
   },
   methods: {
@@ -59,7 +64,6 @@ export default {
       this.counts = data.length
     })
     getProfile(this.userId).then(res => {
-
       let data = res.data
       this.name = data.name
       // console.log(process.env)

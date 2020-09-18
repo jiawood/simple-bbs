@@ -107,7 +107,7 @@ app.route('/register').post(upload.single('avator'), async (req, res) => {
     // console.log(req.body)
     let check = await db.get(sqlMap.user.check, user.name)
     if (!check) {
-      let time = new Date().toString()
+      let time = new Date().toISOString()
       let avator = req.file.filename
 
       let salt = bcrypt.genSaltSync(10)
@@ -200,7 +200,7 @@ app
       if (req.user) {
         let posts = req.body
         let id = req.params.categoryId
-        let time = new Date().toString()
+        let time = new Date().toISOString()
         await db.run(
           sqlMap.posts.add,
           posts.userId,
@@ -238,7 +238,7 @@ app
   .post(async (req, res) => {
     if (req.user) {
       let postId = req.params.postId
-      let time = new Date().toString()
+      let time = new Date().toISOString()
       // console.log(req.body)
       await db.run(
         sqlMap.comments.add,
