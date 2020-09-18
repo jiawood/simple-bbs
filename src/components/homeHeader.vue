@@ -4,14 +4,14 @@
       <span>S-BBS</span>
     </div>
     <div class="right-login">
-      <div class="logined" v-if="isLogin">
+      <div class="logined" v-if="logined">
         <div class="sign-out">登出</div>
-        <div class="user">{{ userName }}</div>
+        <div class="user">{{ logindUser.name }}</div>
         <div class="home">首页</div>
       </div>
-      <div class="no-logined" v-if="!isLogin">
-        <div class="sign-out">注册</div>
-        <div class="user">登录</div>
+      <div class="no-logined" v-else>
+        <div class="sign-out" @click="register">注册</div>
+        <div class="user" @click="login">登录</div>
         <div class="home">首页</div>
       </div>
     </div>
@@ -19,12 +19,23 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
 export default {
   name: 'HomeHeader',
-  data() {
-    return {
-      isLogin: true,
-      userName: 'xiaoj'
+
+  computed: {
+    ...mapState(['logined','logindUser'])
+  },
+  methods: {
+    register() {
+      this.$router.push({
+        path: 'register'
+      })
+    },
+    login() {
+        this.$router.push({
+        path: 'login'
+      })
     }
   }
 }
@@ -35,7 +46,7 @@ export default {
   height: 45px;
   padding: 0 50px;
   background-color: white;
-  overflow: hidden;
+  // overflow: hidden;
   .left-log {
     float: left;
     height: 45px;
@@ -52,7 +63,8 @@ export default {
     float: right;
     height: 45px;
     width: 300px;
-    .logined {
+    .logined,
+    .no-logined {
       height: 25px;
       padding: 10px 0;
       div {

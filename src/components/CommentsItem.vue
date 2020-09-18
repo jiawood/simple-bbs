@@ -7,7 +7,7 @@
       <span class="name">{{ name }}</span>
       <span class="time">{{ comment.time }}</span>
     </div>
-    <div class="comments">
+    <div class="comments" >
       {{ comment.content }}
     </div>
   </div>

@@ -1,6 +1,7 @@
 <template>
   <div class="home-content">
-    <div class="posts" v-for="(item,index) of posts" :key="index">
+    <home-post />
+    <div class="posts" v-for="(item, index) of posts" :key="index">
       <content-item :post="item"></content-item>
     </div>
   </div>
@@ -8,15 +9,17 @@
 
 <script>
 import ContentItem from 'components/ContentItem'
+import HomePost from 'components/HomePost'
 import {getPosts} from 'api/index'
 export default {
   name: 'HomeContent',
   components: {
-    ContentItem
+    ContentItem,
+    HomePost
   },
-  data(){
+  data() {
     return {
-      posts:[]
+      posts: []
     }
   },
   created() {
@@ -25,7 +28,6 @@ export default {
       this.posts = res.data
     })
   }
-
 }
 </script>
 

@@ -6,8 +6,13 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
-    name: 'Home',
+    path: '',
+    component: Home,
+    redirect:'/home'
+
+  },
+  {
+    path: '/home',
     component: Home
   },
   {
@@ -15,6 +20,20 @@ const routes = [
     path: '/comments/:id',
     name: 'comments',
     component: () => import('views/PostComments.vue')
+  },
+  {
+    //注册
+    path:'/register',
+    component: () => import('views/UserRegister.vue')
+  },
+  {
+    path: '/login',
+    component: () => import('views/UserLogin.vue')
+  },
+  //发帖
+  {
+    path: '/post',
+    component: () => import('views/CreatePost.vue')
   }
 ]
 

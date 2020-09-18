@@ -23,6 +23,12 @@
       <div class="comment" v-for="(item, index) of comments" :key="index">
         <comments-item :comment="item"></comments-item>
       </div>
+      <div class="add-comments">
+        <add-comments
+          :postId="postId"
+          @addCommentData="pushCommentData"
+        ></add-comments>
+      </div>
     </div>
   </div>
 </template>
@@ -30,10 +36,12 @@
 <script>
 import {getComments, getProfile, postDetail} from 'api/index'
 import CommentsItem from 'components/CommentsItem'
+import AddComments from 'components/AddComments'
 export default {
   name: 'PostComments',
   components: {
-    CommentsItem
+    CommentsItem,
+    AddComments
   },
   data() {
     return {
@@ -51,6 +59,18 @@ export default {
   computed: {
     postId() {
       return this.$route.params.id
+    }
+  },
+  methods: {
+    pushCommentData(comment) {
+      let data = {
+        commentId: this.comments.length + 1,
+        content: comment.comment,
+        postId: this.postId,
+        time: new Date().toString(),
+        userId: this.userId
+      }
+      this.comments.unshift(data)
     }
   },
   mounted() {
@@ -135,6 +155,7 @@ export default {
     color: black;
     text-indent: 2em;
     margin-bottom: 15px;
+    white-space: pre-wrap;
   }
 
   .comments {

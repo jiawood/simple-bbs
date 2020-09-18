@@ -59,6 +59,7 @@ export default {
       this.counts = data.length
     })
     getProfile(this.userId).then(res => {
+
       let data = res.data
       this.name = data.name
       // console.log(process.env)

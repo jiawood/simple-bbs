@@ -243,6 +243,10 @@ app
         time,
         req.user.userId
       )
+      res.json({
+        code:0,
+        msg:'成功添加回复'
+      })
     } else {
       res.json({
         code: -1,

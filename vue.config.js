@@ -17,5 +17,15 @@ module.exports = {
   },
   configureWebpack: {
     devtool: 'source-map'
+  },
+
+  devServer: {
+    proxy: {
+      '': {
+        target: 'http://localhost:3001',
+        ws: true,
+        changeOrigin: true
+      }
+    }
   }
 }

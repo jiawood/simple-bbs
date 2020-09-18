@@ -61,17 +61,11 @@ export function getPostComment(id) {
 }
 
 //注册
-export function register(name, password, resigerTime, avator, email) {
+export function register(data) {
   return request({
     url: '/register',
     method: 'post',
-    data: {
-      name,
-      password,
-      resigerTime,
-      avator,
-      email
-    }
+    data
   })
 }
 
@@ -97,3 +91,5 @@ export function postDetail(postId) {
     }
   })
 }
+
+

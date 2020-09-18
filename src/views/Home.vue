@@ -10,7 +10,7 @@ import HomeContent from 'components/HomeContent'
 export default {
   name: 'Home',
   components: {
-    HomeContent
+    HomeContent,
   }
 }
 </script>
