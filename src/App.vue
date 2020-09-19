@@ -21,8 +21,8 @@ export default {
 
 <style lang="scss">
 .content {
-  width: 100%;
-  height: 100%;
+  width: calc(100vw - 17px);
+  height: 100vh;
   background-color: rgb(223, 223, 223);
 }
 </style>

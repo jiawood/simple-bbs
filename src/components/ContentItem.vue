@@ -6,13 +6,13 @@
     <div class="content">
       <div class="title">{{ post.title }}</div>
       <div class="detail">
-        <span class="share">分享发现</span> •
+        <span class="share">{{ tag }}</span> •
         <span class="user">{{ name }}</span>
         •
         <span class="time">{{ time }}</span>
       </div>
     </div>
-    <div class="counts">
+    <div class="counts" v-if="counts > 0">
       <div class="count">{{ counts }}</div>
     </div>
   </div>
@@ -21,6 +21,7 @@
 <script>
 import {getComments, getProfile} from 'api/index'
 import parseTime from 'utils/parseTime.js'
+let tagMap = {'1': '分享', '2': '面经', '3': '吐槽', '4': '夸夸'}
 export default {
   name: 'ContentItem',
   data() {
@@ -48,6 +49,9 @@ export default {
     },
     time() {
       return parseTime(this.post.time)
+    },
+    tag() {
+      return tagMap[this.post.category]
     }
   },
   methods: {

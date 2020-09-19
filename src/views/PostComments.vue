@@ -13,7 +13,11 @@
           <img :src="avator" alt="" srcset="" />
         </div>
       </div>
-      <div class="content">{{ content }}</div>
+      <div class="content">
+        <div v-for="(line, index) of contentLines" :key="index">
+          <p>{{ line }}</p>
+        </div>
+      </div>
     </div>
     <div class="comments">
       <div class="top">
@@ -35,6 +39,7 @@
 
 <script>
 import {getComments, getProfile, postDetail} from 'api/index'
+import parseTime from 'utils/parseTime'
 import CommentsItem from 'components/CommentsItem'
 import AddComments from 'components/AddComments'
 export default {
@@ -59,6 +64,9 @@ export default {
   computed: {
     postId() {
       return this.$route.params.id
+    },
+    contentLines() {
+      return this.content.split('\n')
     }
   },
   methods: {
@@ -71,21 +79,27 @@ export default {
         userId: this.userId
       }
       this.comments.unshift(data)
+    },
+    init() {
+      getComments(this.postId).then(res => {
+        let data = res.data
+        this.count = data.length
+        this.comments = data
+      })
+      postDetail(this.postId).then(res => {
+        let data = res.data
+        this.userId = data.userId
+        this.title = data.title
+        this.content = data.content
+        this.time = parseTime(data.time)
+      })
     }
   },
   mounted() {
-    getComments(this.postId).then(res => {
-      let data = res.data
-      this.count = data.length
-      this.comments = data
-    })
-    postDetail(this.postId).then(res => {
-      let data = res.data
-      this.userId = data.userId
-      this.title = data.title
-      this.content = data.content
-      this.time = data.time
-    })
+    this.init()
+  },
+  activated() {
+    this.init()
   },
   watch: {
     userId(newV) {
@@ -140,6 +154,7 @@ export default {
       right: 10px;
       height: 50px;
       width: 50px;
+      border: 1px solid gray;
       img {
         height: 50px;
         width: 50px;
@@ -153,9 +168,15 @@ export default {
     width: 100%;
     font-size: 14px;
     color: black;
-    text-indent: 2em;
+    line-height: 20px;
+    xtext-indent: 2em;
     margin-bottom: 15px;
     white-space: pre-wrap;
+    p {
+      text-indent: 2em;
+      padding: 5px 0;
+      margin: 0;
+    }
   }
 
   .comments {

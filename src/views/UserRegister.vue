@@ -1,11 +1,11 @@
 <template>
-  <div class="user-register">
+  <div class="user-register" size="middle">
     <div class="header">注册</div>
-    <el-button>
+    <el-button class="close" size="mini">
       <i class="el-icon-close" @click="cancelRegister"></i
     ></el-button>
 
-    <el-form ref="form" :model="form" label-width="80px">
+    <el-form ref="form" :model="form" label-width="55px">
       <el-form-item label="用户名">
         <el-input v-model="form.name" type="text"></el-input>
       </el-form-item>
@@ -20,14 +20,16 @@
           :on-change="onFileUpload"
           action=""
           :http-request="cancelDefault"
-          limit="1"
+          :limit="1"
         >
           <el-button size="mini" type="primary">Click to upload</el-button>
         </el-upload>
       </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="onSubmit">注册</el-button>
-        <el-button @click="cancelRegister">取消</el-button>
+      <el-form-item class="last-line">
+        <el-button type="primary" @click="onSubmit" class="register"
+          >注册</el-button
+        >
+        <el-button @click="cancelRegister" class="cancel">取消</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -75,6 +77,7 @@ export default {
             type: 'success',
             offset: 100
           })
+          this.form = {}
         } else {
           this.$notify.error({
             title: '注册失败！',
@@ -82,6 +85,8 @@ export default {
             offset: 100
           })
         }
+        this.form = {}
+
         this.$router.push({
           path: '/login'
         })
@@ -97,12 +102,36 @@ export default {
   left: 0;
   right: 0;
   top: 200px;
-  height: 200px;
-  width: 350px;
+  height: 430px;
+  width: 450px;
   margin: auto;
-  background-color: rgb(223, 223, 223);
+  background-color: white;
+  border: 1px solid gray;
+  .header {
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
+    width: 100%;
+    padding: 10px;
+  }
+  .close {
+    position: absolute;
+    right: 0;
+    top: 0;
+    .el-icon-close {
+      font-size: 20px;
+    }
+  }
   form {
-    padding: 20px 20px;
+    padding: 20px;
+    .last-line {
+      .register {
+        margin-left: 0px;
+      }
+      .cancel {
+        margin-left: 100px;
+      }
+    }
   }
 }
 </style>
