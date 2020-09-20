@@ -2,14 +2,13 @@
   <div class="add-comments">
     <div class="header">
       <div class="left">增加一条新回复</div>
-      <div class="right" @click="goTop">回到顶部</div>
     </div>
-    <el-form>
+    <el-form class="form">
       <el-form-item>
         <el-input type="textarea" v-model="comment"></el-input>
       </el-form-item>
     </el-form>
-    <el-button type="primary" @click="onSubmit(postId, comment)"
+    <el-button type="primary" @click="onSubmit(postId, comment)" class="reply"
       >回复</el-button
     >
   </div>
@@ -52,12 +51,34 @@ export default {
           })
         }
       })
-    },
-    goTop() {
-      window.scrollTo(0, 0)
     }
   }
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.add-comments {
+  margin-top: 10px;
+  overflow: hidden;
+  background-color: white;
+  .header {
+    height: 42px;
+    box-sizing: border-box;
+    padding: 10px;
+    border-bottom: 1px solid gray;
+    .left {
+      line-height: 22px;
+      font-size: 14px;
+      color: black;
+    }
+  }
+  form {
+    padding: 15px 15px 0 15px;
+    box-sizing: border-box;
+  }
+  .reply {
+    margin-bottom: 15px;
+    margin-left: 15px;
+  }
+}
+</style>

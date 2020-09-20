@@ -1,13 +1,19 @@
 <template>
   <div class="create-post">
     <div class="header">发布新主题</div>
-    <el-button class="close"> <i class="el-icon-close" @click="cancelPost"></i></el-button>
+    <el-button class="close">
+      <i class="el-icon-close" @click="cancelPost"></i
+    ></el-button>
     <el-form :model="form" label-width="50px">
-      <el-form-item label="标题">
+      <el-form-item label="标题" class="title" size="mini">
         <el-input type="textarea" v-model="form.title"></el-input>
       </el-form-item>
-      <el-form-item label="内容">
-        <el-input type="textarea" v-model="form.content"></el-input>
+      <el-form-item label="内容" size="midium">
+        <el-input
+          type="textarea"
+          v-model="form.content"
+          class="form-content"
+        ></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit(form.title, form.content)"
@@ -51,6 +57,7 @@ export default {
             duration: 2500
           })
           this.$router.go(-1)
+          this.form = {}
         } else {
           this.$notify.error({
             title: '发帖失败！',
@@ -70,7 +77,6 @@ export default {
   left: 0;
   right: 0;
   top: 200px;
-  height: 500px;
   width: 750px;
   margin: auto;
   background-color: white;
@@ -92,10 +98,8 @@ export default {
   }
   form {
     padding: 20px;
-
-      .cancel {
-        margin-left: 100px;
-
+    .cancel {
+      margin-left: 100px;
     }
   }
 }

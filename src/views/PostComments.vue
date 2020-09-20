@@ -13,7 +13,7 @@
           <img :src="avator" alt="" srcset="" />
         </div>
       </div>
-      <div class="content">
+      <div class="post-content">
         <div v-for="(line, index) of contentLines" :key="index">
           <p>{{ line }}</p>
         </div>
@@ -27,12 +27,12 @@
       <div class="comment" v-for="(item, index) of comments" :key="index">
         <comments-item :comment="item"></comments-item>
       </div>
-      <div class="add-comments">
-        <add-comments
-          :postId="postId"
-          @addCommentData="pushCommentData"
-        ></add-comments>
-      </div>
+    </div>
+    <div class="add-comments">
+      <add-comments
+        :postId="postId"
+        @addCommentData="pushCommentData"
+      ></add-comments>
     </div>
   </div>
 </template>
@@ -127,7 +127,7 @@ export default {
   xoverflow: hidden;
   .header {
     xheight: 100px;
-    padding: 10px 10px 20px 10px;
+    padding: 20px 10px 20px 10px;
     position: relative;
     box-sizing: border-box;
     background-color: white;
@@ -147,29 +147,33 @@ export default {
       line-height: 16px;
       font-size: 12.5px;
       color: #999;
+      .name {
+        color: black;
+      }
     }
     .avator {
       position: absolute;
       top: 10px;
       right: 10px;
-      height: 50px;
-      width: 50px;
-      border: 1px solid gray;
+      height: 70px;
+      width: 70px;
+      xborder: 1px solid gray;
+      overflow: hidden;
       img {
-        height: 50px;
-        width: 50px;
+        transform: translate(-10px, -10px);
+        width: 90px;
+        object-fit: fill;
       }
     }
   }
-  .content {
+  .post-content {
     padding: 20px 10px 20px 10px;
     box-sizing: border-box;
     background-color: white;
-    width: 100%;
+    width: 800px;
     font-size: 14px;
     color: black;
     line-height: 20px;
-    xtext-indent: 2em;
     margin-bottom: 15px;
     white-space: pre-wrap;
     p {
@@ -180,11 +184,18 @@ export default {
   }
 
   .comments {
-    padding: 20px 10px 10px 10px;
     font-size: 14px;
-    color: #dddddd;
+    color: #999999;
     box-sizing: border-box;
     background-color: white;
+    overflow: hidden;
+    .top {
+      height: 42px;
+      padding: 10px;
+      box-sizing: border-box;
+      line-height: 22px;
+      box-shadow: 0 1px 1px gray;
+    }
   }
 }
 </style>

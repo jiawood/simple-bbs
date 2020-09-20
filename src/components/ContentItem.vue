@@ -92,9 +92,11 @@ export default {
   .avator {
     height: 50px;
     width: 50px;
+    overflow: hidden;
     img {
-      height: 50px;
-      width: 50px;
+        transform: translate(-10px, -10px);
+        width: 70px;
+        object-fit: fill;
     }
   }
   .content {

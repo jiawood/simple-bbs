@@ -52,15 +52,18 @@ export default {
   position: relative;
   padding: 10px 10px 10px 75px;
   box-sizing: border-box;
+  border-bottom: 1px solid gray;
   .avator {
     position: absolute;
-    width: 48px;
-    height: 48px;
+    width: 50px;
+    height: 50px;
     top: 10px;
     left: 7px;
+    overflow: hidden;
     img {
-      width: 48px;
-      height: 48px;
+      width: 70px;
+      height: 70px;
+      transform: translate(-10px, -10px);
     }
   }
   .message {
