@@ -10,11 +10,9 @@ import HomeContent from 'components/HomeContent'
 export default {
   name: 'Home',
   components: {
-    HomeContent,
+    HomeContent
   }
 }
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>
