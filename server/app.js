@@ -52,6 +52,9 @@ app.use(express.json())
 //文件存储地址
 app.use('/uploads', express.static(__dirname + '/uploads'))
 
+//将静态文件放在静态文件夹
+app.use('/dist', express.static(__dirname + '/dist'))
+
 //判断是否登录过
 app.get('/isLogined', (req, res) => {
   if (req.user) {
