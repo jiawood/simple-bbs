@@ -2,7 +2,7 @@
   <div class="header">
     <div class="header-container">
       <div class="left-log">
-        <span>FrontEnd Group</span>
+        <span>FEG</span>
       </div>
       <div class="right-login">
         <div class="logined" v-if="logined">

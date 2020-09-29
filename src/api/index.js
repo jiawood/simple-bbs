@@ -8,7 +8,7 @@ export function getPosts() {
 }
 
 //增加帖子
-export function addPosts(userId,title,content) {
+export function addPosts(userId, title, content) {
   return request({
     url: '/posts/3',
     method: 'post',
@@ -28,7 +28,7 @@ export function getComments(postId) {
 }
 
 //增加回复
-export function addComment(postId,content) {
+export function addComment(postId, content) {
   return request({
     url: `/comments/${postId}`,
     method: 'post',
@@ -70,7 +70,7 @@ export function register(data) {
 }
 
 //登录
-export function login(name,password) {
+export function login(name, password) {
   return request({
     url: '/login',
     method: 'post',
@@ -86,14 +86,14 @@ export function postDetail(postId) {
   return request({
     url: '/postDetail',
     method: 'get',
-    params:{
+    params: {
       postId
     }
   })
 }
 
 //页面刷新时，通过cookie判断用户是否登录，设置vuex里面的loginedUser
-export function userIsLogined(){
+export function userIsLogined() {
   return request({
     url: '/isLogined',
     method: 'get'
@@ -101,7 +101,7 @@ export function userIsLogined(){
 }
 
 //登出
-export function signOut(){
+export function signOut() {
   return request({
     url: '/signout'
   })
