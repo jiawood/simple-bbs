@@ -1,9 +1,9 @@
 import {request} from '@/utils/request'
 
 //获取分类为3的所有的帖子
-export function getPosts() {
+export function getPosts(categoryId) {
   return request({
-    url: '/posts/3'
+    url: `/posts/${categoryId}`
   })
 }
 

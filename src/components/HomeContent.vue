@@ -2,40 +2,22 @@
   <div class="home-content">
     <home-post />
     <div class="header">
-      <div class="total">全部</div>
+      <classify-bar />
     </div>
-    <div class="posts" v-for="(item, index) of posts" :key="index">
-      <content-item :post="item"></content-item>
-    </div>
+    <contentContainer />
   </div>
 </template>
 
 <script>
-import ContentItem from 'components/ContentItem'
+import ContentContainer from 'components/ContentContainer'
 import HomePost from 'components/HomePost'
-import {getPosts} from 'api/index'
+import ClassifyBar from 'components/ClassifyBar'
 export default {
   name: 'HomeContent',
   components: {
-    ContentItem,
-    HomePost
-  },
-  data() {
-    return {
-      posts: []
-    }
-  },
-  created() {
-    getPosts().then(res => {
-      console.log(res)
-      this.posts = res.data
-    })
-  },
-  activated() {
-    getPosts().then(res => {
-      console.log(res)
-      this.posts = res.data
-    })
+    ContentContainer,
+    HomePost,
+    ClassifyBar
   }
 }
 </script>
@@ -44,19 +26,12 @@ export default {
 .header {
   height: 44px;
   box-sizing: border-box;
-  padding: 10px;
+  padding-left: 10px;
+  xpadding: 10px;
   font-size: 14px;
   background-color: white;
   color: white;
   width: 800px;
-  .total {
-    line-height: 24px;
-    background-color: #333344;
-    height: 24px;
-    width: 44px;
-    text-align: center;
-    box-sizing: border-box;
-  }
 }
 .home-content {
   padding-top: 30px;
