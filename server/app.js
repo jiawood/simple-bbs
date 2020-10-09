@@ -203,8 +203,13 @@ app
   .route('/posts/:categoryId')
   .get(async (req, res) => {
     let id = req.params.categoryId
-    let posts = await db.all(sqlMap.posts.data, id)
-    res.json(posts)
+    if (id != 0) {
+      let posts = await db.all(sqlMap.posts.data, id)
+      res.json(posts)
+    } else {
+      let posts = await db.all('select * from posts  order by postId desc')
+      res.json(posts)
+    }
   })
   .post(async (req, res) => {
     try {

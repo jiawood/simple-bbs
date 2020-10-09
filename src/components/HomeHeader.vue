@@ -41,9 +41,9 @@ export default {
       })
     },
     goToHome() {
-      if (this.$route.fullPath != '/home') {
+      if (this.$route.fullPath != '/home/total') {
         this.$router.push({
-          path: '/home'
+          path: '/home/total'
         })
       }
     },
