@@ -4,6 +4,9 @@
     <div class="header">
       <classify-bar />
     </div>
+    <!-- <div class="img">
+      <img :src="url" alt="" srcset="">
+    </div> -->
     <contentContainer />
   </div>
 </template>
@@ -18,7 +21,12 @@ export default {
     ContentContainer,
     HomePost,
     ClassifyBar
-  }
+  },
+  data(){
+    return {
+      url: require('assets/bgc.jpg')
+    }
+  },
 }
 </script>
 
@@ -40,6 +48,18 @@ export default {
   position: relative;
   left: 0;
   right: 0;
-  margin: auto;
+  xmargin: auto;
+}
+.img{
+  height: 784px;
+  width: 354px;
+  position: fixed;
+  top: 120px;
+  right: 350px;
+  z-index: -1;
+  img {
+    height: 784px;
+    width: 354px;
+  }
 }
 </style>

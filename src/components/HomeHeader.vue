@@ -90,7 +90,7 @@ export default {
     height: 45px;
     // padding: 0 50px;
     background-color: white;
-    width: 1000px;
+    width: 1154px;
     position: absolute;
     left: 0;
     right: 0;
