@@ -60,7 +60,7 @@ export default {
           this.name = ''
           this.password = ''
           this.$router.push({
-            path: '/home'
+            path: '/home/total'
           })
         }
       })
