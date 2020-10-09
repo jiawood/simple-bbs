@@ -41,9 +41,11 @@ export default {
       })
     },
     goToHome() {
-      this.$router.push({
-        path: '/home'
-      })
+      if (this.$route.fullPath != '/home') {
+        this.$router.push({
+          path: '/home'
+        })
+      }
     },
     signOut() {
       signOut().then(res => {

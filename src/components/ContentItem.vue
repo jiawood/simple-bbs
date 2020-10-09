@@ -60,19 +60,25 @@ export default {
         name: 'comments',
         params: {id: postId, userId: userId}
       })
+    },
+    init() {
+      getComments(this.postId).then(res => {
+        let data = res.data
+        this.counts = data.length
+      })
+      getProfile(this.userId).then(res => {
+        let data = res.data
+        this.name = data.name
+        // console.log(process.env)
+        this.avator = process.env.VUE_APP_BASE_URL + data.avator
+      })
     }
   },
   mounted() {
-    getComments(this.postId).then(res => {
-      let data = res.data
-      this.counts = data.length
-    })
-    getProfile(this.userId).then(res => {
-      let data = res.data
-      this.name = data.name
-      // console.log(process.env)
-      this.avator = process.env.VUE_APP_BASE_URL + data.avator
-    })
+    this.init()
+  },
+  activated() {
+    this.init()
   }
 }
 </script>
@@ -94,9 +100,9 @@ export default {
     width: 50px;
     overflow: hidden;
     img {
-        transform: translate(-10px, -10px);
-        width: 70px;
-        object-fit: fill;
+      transform: translate(-10px, -10px);
+      width: 70px;
+      object-fit: fill;
     }
   }
   .content {
