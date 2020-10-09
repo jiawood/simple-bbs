@@ -55,6 +55,14 @@ app.use('/uploads', express.static(__dirname + '/uploads'))
 //将静态文件放在静态文件夹
 app.use('/dist', express.static(__dirname + '/dist'))
 
+app.get('/', (req, res) => {
+  res.redirect('/dist')
+})
+
+app.get(/\/dist\//, (req, res) => {
+  res.sendFile(__dirname + '/dist/index.html')
+})
+
 //判断是否登录过
 app.get('/isLogined', (req, res) => {
   if (req.user) {
@@ -251,8 +259,8 @@ app
         req.user.userId
       )
       res.json({
-        code:0,
-        msg:'成功添加回复'
+        code: 0,
+        msg: '成功添加回复'
       })
     } else {
       res.json({
@@ -266,7 +274,10 @@ app
 app.post('/profile', async (req, res) => {
   // console.log(req.body)
   let userId = req.body.userId
-  let profile = await db.get('select name,registerTime,avator,email from users where userId = (?)', userId)
+  let profile = await db.get(
+    'select name,registerTime,avator,email from users where userId = (?)',
+    userId
+  )
   // console.log(profile)
   res.json(profile)
 })
@@ -284,7 +295,7 @@ app.get('/signout', async (req, res) => {
   res.clearCookie('userName')
   res.json({
     code: 0,
-    msg:'成功退出'
+    msg: '成功退出'
   })
 })
 
