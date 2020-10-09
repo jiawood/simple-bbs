@@ -8,9 +8,9 @@ export function getPosts(categoryId) {
 }
 
 //增加帖子
-export function addPosts(userId, title, content) {
+export function addPosts(userId, title, content, value) {
   return request({
-    url: '/posts/3',
+    url: `/posts/${value}`,
     method: 'post',
     data: {
       userId,

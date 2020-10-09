@@ -8,6 +8,16 @@
       <el-form-item label="标题" class="title" size="mini">
         <el-input type="textarea" v-model="form.title"></el-input>
       </el-form-item>
+      <el-form-item label="分类" class="classify">
+  <el-select v-model="form.value" placeholder="请选择">
+    <el-option
+      v-for="item in options"
+      :key="item.value"
+      :label="item.label"
+      :value="item.value">
+    </el-option>
+  </el-select>
+      </el-form-item>
       <el-form-item label="内容" size="midium">
         <el-input
           type="textarea"
@@ -16,7 +26,7 @@
         ></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="onSubmit(form.title, form.content)"
+        <el-button type="primary" @click="onSubmit(form.title, form.value,form.content)"
           >发布</el-button
         >
         <el-button @click="cancelPost" class="cancel">取消</el-button>
@@ -33,8 +43,22 @@ export default {
     return {
       form: {
         title: '',
-        content: ''
-      }
+        content: '',
+        value:''
+      },
+      options : [{
+          value: '1',
+          label: '分享'
+        }, {
+          value: '2',
+          label: '讨论'
+        }, {
+          value: '3',
+          label: '吐槽'
+        }, {
+          value: '4',
+          label: '夸夸'
+        }]
     }
   },
   computed: {
@@ -46,8 +70,8 @@ export default {
     cancelPost() {
       this.$router.go(-1)
     },
-    onSubmit(title, content) {
-      addPosts(this.userId, title, content).then(res => {
+    onSubmit(title, value, content) {
+      addPosts(this.userId, title, content, value).then(res => {
         if (res.data.code == 0) {
           this.$notify({
             title: '发帖成功！',
