@@ -64,7 +64,7 @@ export default {
   width: 354px;
   position: fixed;
   top: 120px;
-  right: 350px;
+  left: 68%;
   img {
     height: 784px;
     width: 354px;
@@ -73,5 +73,10 @@ export default {
 .content {
   width: 1154px;
   margin: auto;
+}
+@media (max-width: 1126) {
+.img{
+  display: none;
+}
 }
 </style>

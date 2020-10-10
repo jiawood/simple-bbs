@@ -1,7 +1,7 @@
 .DS_Store
 node_modules
 /dist
-server/dist
+dist
 
 # local env files
 .env.local
@@ -20,3 +20,6 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw?
+
+# 忽略db文件
+*.db

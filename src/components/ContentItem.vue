@@ -21,7 +21,7 @@
 <script>
 import {getComments, getProfile} from 'api/index'
 import parseTime from 'utils/parseTime.js'
-let tagMap = {'1': '分享', '2': '面经', '3': '吐槽', '4': '夸夸'}
+let tagMap = {'1': '分享', '2': '讨论', '3': '吐槽', '4': '夸夸'}
 export default {
   name: 'ContentItem',
   data() {
@@ -79,7 +79,12 @@ export default {
   },
   activated() {
     this.init()
-  }
+  },
+  watch: {
+    // 如果路由有变化，会再次执行该方法
+    '$route': 'init'
+  },
+
 }
 </script>
 
