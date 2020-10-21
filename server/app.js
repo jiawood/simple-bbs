@@ -111,6 +111,8 @@ var upload = multer({
 })
 
 //注册
+
+
 app.route('/register').post(upload.single('avator'), async (req, res) => {
   try {
     //注册的时候需要判断用户名是否重复

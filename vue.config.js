@@ -19,16 +19,16 @@ module.exports = {
     devtool: 'source-map'
   },
 
-  devServer: {
-    proxy: {
-      '': {
-        target: 'http://localhost:3001',
+  // devServer: {
+    // proxy: {
+      // '': {
+        //target: 'http://localhost:3001',
         // target: 'http://139.196.203.58:3001',
-        ws: true,
-        changeOrigin: true
-      }
-    }
-  },
+        //ws: true,
+        //changeOrigin: true
+      //}
+    //}
+  //},
 
   publicPath: process.env.NODE_ENV === 'production' ? '/dist' : '/'
 }

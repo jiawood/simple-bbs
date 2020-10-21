@@ -1,7 +1,7 @@
 # 基于express和vue的论坛系统
-:musical_keyboard: 基于 express + Vue(2.6) + vuex + vue-router + axios + Scss + ES6 等开发一个简单论坛，UI 界面参考了v2ex
+:musical_keyboard: 基于 express + Vue(2.6) + vuex + vue-router + axios + Sass + ES6 等开发一个简单论坛，UI 界面参考了v2ex
 
-:yum: 项目演示地址：[Simple-BBS](http://139.196.203.58:8081/home)
+:yum: 项目演示地址：[Simple-BBS](http://139.196.203.58:3001/dist/home/total)
 
 ## 预览
 
@@ -20,7 +20,7 @@
 * `vue-router`：为单页面应用提供的路由系统
 * `vuex`：Vue 集中状态管理，用来保存登录状态和登录的用户信息，便于多个组件共享
 * `Element`:Vue组件库,使用了部分组件
-* `SCSS`：css 预编译处理器
+* `SASS`：css 预编译处理器
 * `axios`：用于请求后端数据
 * `ES6`：ECMAScript 新一代语法，模块化、解构赋值、Promise、Class 等方法非常好用
 
@@ -46,7 +46,7 @@
 - [x] 发布新主题
 - [x] 增加评论
 - [x] 头像上传
-- [ ] 帖子分类
+- [x] 帖子分类
 - [ ] 帖子顶置
 - [ ] 帖子分页
 - [ ] 删除帖子

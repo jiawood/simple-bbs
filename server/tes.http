@@ -19,7 +19,7 @@ post {{url}}/login
 {{json}}
 
 {
-  "name":"xj",
+  "name":"xiaoJne",
   "password":"123"
 }
 

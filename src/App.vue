@@ -20,7 +20,7 @@
       clickMode="push"
     ></vue-particles>
     <div class="img">
-      <img :src="url" alt="" srcset="">
+      <img :src="url" alt="" srcset="" />
     </div>
     <div class="content">
       <keep-alive>
@@ -34,7 +34,7 @@
 import HomeHeader from 'components/HomeHeader'
 export default {
   name: 'App',
-  data(){
+  data() {
     return {
       url: require('assets/bgc.jpg')
     }
@@ -59,7 +59,7 @@ export default {
   background-color: rgb(255, 247, 224);
   z-index: -1;
 }
-.img{
+.img {
   height: 784px;
   width: 354px;
   position: fixed;
@@ -75,8 +75,8 @@ export default {
   margin: auto;
 }
 @media (max-width: 1126) {
-.img{
-  display: none;
-}
+  .img {
+    display: none;
+  }
 }
 </style>
