@@ -1,7 +1,9 @@
 <template>
   <div class="user-login">
     <div class="header">登录</div>
-    <el-button class="close"> <i class="el-icon-close" @click="cancelLogin"></i></el-button>
+    <el-button class="close">
+      <i class="el-icon-close" @click="cancelLogin"></i
+    ></el-button>
 
     <el-form label-width="55px">
       <el-form-item label="用户名">
@@ -11,7 +13,9 @@
         <el-input v-model="password" type="password"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="onSubmit" class="login">登录</el-button>
+        <el-button type="primary" @click="onSubmit" class="login"
+          >登录</el-button
+        >
         <el-button @click="cancelLogin" class="cancel">取消</el-button>
       </el-form-item>
     </el-form>
@@ -51,7 +55,7 @@ export default {
           this.$notify({
             title: '登录成功！',
             message:
-              '您已成功登录，现在你可以发布新帖子，或者回复其他人的帖子,希望您在 我嘉小站 里玩的愉快:)',
+              '您已成功登录，现在你可以发布新帖子，或者回复其他人的帖子,希望您在 前端小组 里玩的愉快:)',
             type: 'success',
             offset: 100
           })
@@ -98,9 +102,8 @@ export default {
   form {
     padding: 20px;
 
-      .cancel {
-        margin-left: 100px;
-
+    .cancel {
+      margin-left: 100px;
     }
   }
 }

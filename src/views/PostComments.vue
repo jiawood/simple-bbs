@@ -76,7 +76,7 @@ export default {
         content: comment.comment,
         postId: this.postId,
         time: new Date().toString(),
-        userId: this.userId
+        userId: this.$store.state.loginedUser.userId
       }
       this.comments.unshift(data)
     },

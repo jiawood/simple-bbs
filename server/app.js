@@ -112,7 +112,6 @@ var upload = multer({
 
 //注册
 
-
 app.route('/register').post(upload.single('avator'), async (req, res) => {
   try {
     //注册的时候需要判断用户名是否重复
@@ -304,6 +303,32 @@ app.get('/signout', async (req, res) => {
     code: 0,
     msg: '成功退出'
   })
+})
+
+//拿到所有的帖子，并有用户的信息
+app.get('/getAllPosts', async (req, res) => {
+  let id = req.params.categoryId
+  if (id != 0) {
+    let posts = await db.all(
+      `SELECT posts.postId,posts.userId,posts.title,posts.time,posts.content,posts.category,users.name,users.avator
+      from posts
+      LEFT JOIN users
+      WHERE posts.userId == users.userId
+      AND category ==(?)
+      rder by postId desc`,
+      id
+    )
+    res.json(posts)
+  } else {
+    let posts = await db.all(
+      `SELECT posts.postId,posts.userId,posts.title,posts.time,posts.content,posts.category,users.name,users.avator
+      from posts
+      LEFT JOIN users
+      WHERE posts.userId == users.userId
+      order by postId desc`
+    )
+    res.json(posts)
+  }
 })
 
 //端口监听

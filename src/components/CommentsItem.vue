@@ -43,6 +43,13 @@ export default {
       this.name = data.name
       this.avator = process.env.VUE_APP_BASE_URL + data.avator
     })
+  },
+  activated(){
+      getProfile(this.comment.userId).then(res => {
+      let data = res.data
+      this.name = data.name
+      this.avator = process.env.VUE_APP_BASE_URL + data.avator
+    })
   }
 }
 </script>
