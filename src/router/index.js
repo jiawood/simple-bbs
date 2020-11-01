@@ -8,12 +8,11 @@ const routes = [
   {
     path: '',
     component: Home,
-    redirect:'/home/total'
-
+    redirect: '/home/total'
   },
   {
     path: '/home/:path',
-    name:'home',
+    name: 'home',
     component: Home
   },
   {
@@ -24,7 +23,7 @@ const routes = [
   },
   {
     //注册
-    path:'/register',
+    path: '/register',
     component: () => import('views/UserRegister.vue')
   },
   {

@@ -62,6 +62,7 @@ export default {
       })
     },
     init() {
+
       getComments(this.postId).then(res => {
         let data = res.data
         this.counts = data.length
@@ -77,14 +78,13 @@ export default {
   mounted() {
     this.init()
   },
-  activated() {
-    this.init()
-  },
-  watch: {
-    // 如果路由有变化，会再次执行该方法
-    '$route': 'init'
-  },
-
+  // activated() {
+  //   this.init()
+  // },
+  // watch: {
+  //   // 如果路由有变化，会再次执行该方法
+  //   $route: 'init'
+  // }
 }
 </script>
 

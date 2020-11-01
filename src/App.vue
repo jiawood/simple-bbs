@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <home-header />
-    <vue-particles
+    <div class="bg"></div>
+    <!-- <vue-particles
       color="#1CF7F7"
       class="bg"
       :particleOpacity="0.7"
@@ -18,7 +19,7 @@
       hoverMode="grab"
       :clickEffect="true"
       clickMode="push"
-    ></vue-particles>
+    ></vue-particles> -->
     <div class="img">
       <img :src="url" alt="" srcset="" />
     </div>

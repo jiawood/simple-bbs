@@ -24,7 +24,7 @@
         <span>{{ count }}条回复 · </span>
         <span>{{ nowTime }}</span>
       </div>
-      <div class="comment" v-for="(item, index) of comments" :key="index">
+      <div class="comment" v-for="(item, index) of comments" :key="item.commentId">
         <comments-item :comment="item"></comments-item>
       </div>
     </div>
@@ -117,13 +117,14 @@ export default {
 <style lang="scss" scoped>
 .post-comments {
   min-width: 490px;
-  max-width: 800px;
+  max-width: 1154px;
   position: relative;
   left: 0;
   right: 0;
   margin-top: 15px;
   margin: auto;
   padding-top: 15px;
+  padding-right: 354px;
   xoverflow: hidden;
   .header {
     xheight: 100px;

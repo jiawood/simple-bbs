@@ -1,6 +1,6 @@
 <template>
   <div class="content-container">
-    <div class="posts" v-for="(item, index) of posts" :key="index">
+    <div class="posts" v-for="(item, index) of posts" :key="item.postId">
       <content-item :post="item"></content-item>
     </div>
   </div>
@@ -36,9 +36,9 @@ export default {
   created() {
     this.getData()
   },
-  activated() {
-    this.getData()
-  },
+  // activated() {
+  //   this.getData()
+  // },
   watch:{
     '$route':'getData'
   }

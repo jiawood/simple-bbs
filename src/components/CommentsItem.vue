@@ -7,7 +7,7 @@
       <span class="name">{{ name }}</span>
       <span class="time">{{ time }}</span>
     </div>
-    <div class="comments" >
+    <div class="comments">
       {{ comment.content }}
     </div>
   </div>
@@ -33,23 +33,27 @@ export default {
     }
   },
   computed: {
-    time(){
+    time() {
       return parseTime(this.comment.time)
     }
   },
-  mounted(){
-    getProfile(this.comment.userId).then(res => {
-      let data = res.data
-      this.name = data.name
-      this.avator = process.env.VUE_APP_BASE_URL + data.avator
-    })
-  },
-  activated(){
+  methods: {
+    getDate() {
       getProfile(this.comment.userId).then(res => {
-      let data = res.data
-      this.name = data.name
-      this.avator = process.env.VUE_APP_BASE_URL + data.avator
-    })
+        let data = res.data
+        this.name = data.name
+        this.avator = process.env.VUE_APP_BASE_URL + data.avator
+      })
+    }
+  },
+  mounted() {
+    this.getDate()
+  },
+  activated() {
+    this.getDate()
+  },
+  watch: {
+    $route: 'getData'
   }
 }
 </script>

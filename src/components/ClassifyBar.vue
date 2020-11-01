@@ -5,7 +5,7 @@
       v-for="(item, index) in classifyData"
       :key="item.name"
       :class="index == currentIndex ? 'active' : ''"
-      @click="itemClick(index,item.path)"
+      @click="itemClick(index, item.path)"
     >
       {{ item.name }}
     </div>
@@ -28,10 +28,15 @@ export default {
     }
   },
   methods: {
-    itemClick(index, path){
+    itemClick(index, path) {
       this.currentIndex = index
       this.$router.push(`/home${path}`)
     }
+  },
+  mounted() {
+    let map = {total: 0, share: 1, discuss: 2, complain: 3, complement: 4}
+    let path = this.$route.params.path
+    this.currentIndex = map[path]
   }
 }
 </script>
@@ -53,15 +58,15 @@ export default {
     color: black;
     cursor: pointer;
     &:hover {
-      background-color:rgb(245,245,245)
+      background-color: rgb(245, 245, 245);
     }
   }
   .active {
     background-color: #333344;
     color: white;
     &:hover {
-    background-color: #393949;
-    color: white;
+      background-color: #393949;
+      color: white;
     }
   }
 }
